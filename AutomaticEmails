@@ -1,0 +1,25 @@
+import smtplib
+
+import config
+
+
+def send_email(subject, msg):
+    try:
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.ehlo()
+        server.starttls()
+        server.login(config.EMAIL_ADDRESS, config.PASSWORD)
+        message = 'Subject : {}\n\n{}'.format(subject, msg)
+        server.sendmail(config.EMAIL_ADDRESS, ("name of email", "another name of email"), message)
+
+
+        server.quit()
+        print("Success - email was sent!")
+    except:
+        print("Email failed, try again.")
+
+
+subject = "American Red Cross alert"
+msg = "A new message has been sent from SCHS American Red Cross club, please check your remind101. Stay tuned for more volunteer opportunities. Thank you and stay fresh ;)"
+
+send_email(subject, msg)
